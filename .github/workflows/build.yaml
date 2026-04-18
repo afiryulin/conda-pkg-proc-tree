@@ -23,7 +23,7 @@ jobs:
         uses: conda-incubator/setup-miniconda@v3.3.0
         with:
           miniforge-variant: Miniforge3
-          auto-activate-base: true
+          auto-activate: true
           conda-remove-defaults: true
           channels: conda-forge, nodefaults
 
@@ -37,6 +37,7 @@ jobs:
         run: |
             conda info
             conda-build --output-folder ${{github.workspace}}/dist ${{github.workspace}}/conda-recipe
+            ls -R dist/
 
       - name: Upload Package
         uses: actions/upload-artifact@v7.0.1
