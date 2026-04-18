@@ -1,0 +1,48 @@
+name: Build
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y build-essential cmake
+
+      - name: Setup Conda
+        uses: conda-incubator/setup-miniconda@v3.3.0
+        with:
+          activate-environment: build-env
+          python-version: 3.10
+          auto-activate-base: true
+          install-conda-build: true
+          extra-specs: |
+            conda-build
+            anaconda-client
+
+
+      - name: Build Conda Package
+        shell: bash -el {0}
+        run: |
+            if ! command -v conda-build &> /dev/null; then
+              conda install -n base -y conda-build
+            fi
+            conda info
+            $CONDA/bin/conda-build ${{github.workspace}}/conda-recipe
+
+      - name: Upload Package
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: proc-tree-package
+          path: ${{github.workspace}}/conda-recipe/build_artifacts
+

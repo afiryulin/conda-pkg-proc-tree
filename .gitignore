@@ -1,0 +1,41 @@
+# Linux and editor files
+*~
+.DS_Store
+.vscode/
+.idea/
+.cache/
+.venv/
+entities.json
+mempalace.yaml
+
+
+
+# Build artifacts
+build/
+dist/
+out/
+bin/
+obj/
+*.o
+*.so
+*.a
+*.exe
+*.out
+*.elf
+
+# Python
+__pycache__/
+*.py[cod]
+env/
+venv/
+
+act
+
+# Node
+node_modules/
+
+# Logs and temp
+*.log
+*.tmp
+*.swp
+.env
