@@ -22,13 +22,15 @@ jobs:
       - name: Setup Conda
         uses: conda-incubator/setup-miniconda@v3.3.0
         with:
-          activate-environment: build-env
           miniforge-variant: Miniforge3
-          miniforge-version: latest
           auto-activate-base: true
-          conda-build-version: "24.3.0"
           conda-remove-defaults: true
           channels: conda-forge, nodefaults
+
+      - name: Install Build Tools
+        shell: bash -el {0}
+        run: |
+            mamba install -y conda-build anaconda-client
 
       - name: Build Conda Package
         shell: bash -el {0}
