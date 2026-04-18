@@ -35,15 +35,15 @@ jobs:
       - name: Build Conda Package
         shell: bash -el {0}
         run: |
-            conda info
-            conda-build --output-folder ${{github.workspace}}/dist ${{github.workspace}}/conda-recipe
-            ls -R dist/
+            conda build conda-recipe --output-folder dist
 
       - name: Upload Package
         uses: actions/upload-artifact@v7.0.1
         with:
           name: proc-tree-package
-          path: dist/**/*.conda
+          path: |
+            dist/**/*.conda
+            dist/**/*.tar.bz2
           if-no-files-found: error
 
 
