@@ -1,0 +1,25 @@
+package:
+  name: proc-tree
+  version: 0.1.0
+
+source:
+  path: ..
+
+build:
+  number: 0
+
+requirements:
+  build:
+    - cmake
+    - make
+    - {{ compiler('cxx') }}
+
+  host:
+    - libstdcxx-ng
+
+  run:
+    - libstdcxx-ng
+
+  about:
+    summary: A C++ library that prints for process tree.
+    license: MIT
