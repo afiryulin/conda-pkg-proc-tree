@@ -23,7 +23,7 @@ jobs:
         uses: conda-incubator/setup-miniconda@v3.3.0
         with:
           activate-environment: build-env
-          python-version: "3.14"
+          python-version: "3.11"
           auto-activate-base: true
           conda-build-version: 3.27
           conda-remove-defaults: true
