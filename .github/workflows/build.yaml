@@ -23,9 +23,10 @@ jobs:
         uses: conda-incubator/setup-miniconda@v3.3.0
         with:
           activate-environment: build-env
-          python-version: "3.11"
+          miniforge-variant: Miniforge3
+          miniforge-version: latest
           auto-activate-base: true
-          conda-build-version: 3.27
+          conda-build-version: "24.3.0"
           conda-remove-defaults: true
           channels: conda-forge, nodefaults
 
