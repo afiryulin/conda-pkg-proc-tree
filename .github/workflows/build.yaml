@@ -25,8 +25,9 @@ jobs:
           activate-environment: build-env
           python-version: "3.14"
           auto-activate-base: true
-          install-conda-build: true
           conda-build-version: 3.27
+          conda-remove-defaults: true
+          channels: conda-forge, nodefaults
 
       - name: Build Conda Package
         shell: bash -el {0}
