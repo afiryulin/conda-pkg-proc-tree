@@ -38,11 +38,11 @@ jobs:
               conda install -n base -y conda-build
             fi
             conda info
-            $CONDA/bin/conda-build ${{github.workspace}}/conda-recipe
+            $CONDA/bin/conda-build --output-folder ${{github.workspace}}/dist ${{github.workspace}}/conda-recipe
 
       - name: Upload Package
         uses: actions/upload-artifact@v7.0.1
         with:
           name: proc-tree-package
-          path: ${{github.workspace}}/conda-recipe/build_artifacts
+          path: ${{github.workspace}}/dist/linux-64/*.tar.bz2
 
