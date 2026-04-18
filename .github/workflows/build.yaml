@@ -23,14 +23,20 @@ jobs:
         uses: conda-incubator/setup-miniconda@v3.3.0
         with:
           activate-environment: build-env
-          python-version: "3.14"
+          python-version: "3.10"
           auto-activate-base: true
           install-conda-build: true
-          conda-build-version: 3.27
+          extra-specs: |
+            conda-build
+            anaconda-client
+
 
       - name: Build Conda Package
         shell: bash -el {0}
         run: |
+            if ! command -v conda-build &> /dev/null; then
+              conda install -n base -y conda-build
+            fi
             conda info
             conda-build --output-folder ${{github.workspace}}/dist ${{github.workspace}}/conda-recipe
 
