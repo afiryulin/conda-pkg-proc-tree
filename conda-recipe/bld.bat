@@ -1,8 +1,16 @@
 mkdir build
 cd build
 
-cmake .. -G "NMake Makefiles" ^
-    -DCMAKE_INSTALL_PREFIX=%PREFIX% -DCMAKE_BUILD_TYPE=Release
+cmake ^
+    -G "Ninja" ^
+    -DCMAKE_C_COMPILER=gcc ^
+    -DCMAKE_CXX_COMPILER=g++ ^
+    -DCMAKE_BUILD_TYPE=Release ^
+    -DCMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% ^
+    %SRC_DIR% ^
+    ..
+       
+if errorlevel 1 exit 1
 
-nmake
-nmake install
+ninja install 
+if errorlevel 1 exit 1
