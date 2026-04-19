@@ -20,9 +20,18 @@ requirements:
 
   host:
     - libstdcxx-ng # [linux]
+    - fmt
+    - nlohmann_json
 
   run:
+    - fmt
     - libstdcxx-ng # [linux]
+
+test:
+  requires:
+    - proc-tree
+  commands:
+    - proc-tree --help
 
 about:
   summary: A C++ library that prints for process tree.

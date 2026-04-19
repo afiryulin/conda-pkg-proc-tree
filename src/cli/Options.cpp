@@ -14,6 +14,9 @@ Options OptionsParser::Parse(const int &argc, char **argv)
 
         if (arg == "--json")
             result.jsonOutput = true;
+
+        if (arg == "--help")
+            result.showHelp = true;
     }
 
     return result;

@@ -10,15 +10,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 file(GLOB_RECURSE SOURCES src/*.cpp)
 
-include(cmake/CPM.cmake)
-
-CPMAddPackage(
-    NAME fmt
-    GITHUB_REPOSITORY fmtlib/fmt
-    GIT_TAG 11.0.2
-    OPTIONS
-        "FMT_TEST OFF"
-)
+find_package(fmt REQUIRED)
 
 add_executable(${PROJECT_NAME}
     ${SOURCES}

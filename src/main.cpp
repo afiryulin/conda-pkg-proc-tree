@@ -1,5 +1,8 @@
 #include <iostream>
 
+#include <fmt/core.h>
+#include <iostream>
+
 #include "cli/Options.h"
 #include "proc/ProcessTreeBuilder.h"
 #include "proc/ProcessPrinter.h"
@@ -21,6 +24,12 @@ int main(int argc, char **argv)
 #endif
 
     Options opts = OptionsParser::Parse(argc, argv);
+
+    if (opts.showHelp)
+    {
+        fmt::print("This application show process tree.\nOptions:\n\t--help\t\tshow this text\n\t--threads\tbuild threads \n\t--json\t\toutput in JSON format\n");
+        return 0;
+    }
 
     auto processes = provider.GetProcesses(opts.showThreads);
 
