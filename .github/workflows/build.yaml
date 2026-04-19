@@ -47,5 +47,6 @@ jobs:
             dist/**/*.conda
             dist/**/*.tar.bz2
           if-no-files-found: error
+          retention-days: 7
 
 
