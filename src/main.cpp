@@ -5,9 +5,10 @@
 #include "proc/ProcessPrinter.h"
 
 #ifdef _WIN32
-#include "proc/WindowsProcessProvider.cpp"
+#include <windows.h> // SetConsoleOutputCP(...)
+#include "proc/WindowsProcessProvider.h"
 #else
-#include "proc/LinuxProcessProvider.cpp"
+#include "proc/LinuxProcessProvider.h"
 #endif
 
 int main(int argc, char **argv)
@@ -27,7 +28,7 @@ int main(int argc, char **argv)
     if (opts.jsonOutput)
         std::cout << "JSON output turned on" << std::endl;
 
-    auto processes = provider.GetProcesses();
+    auto processes = provider.GetProcesses(opts.showThreads);
 
     ProcessTreeBuilder builder;
     auto root = builder.BuildTree(processes);
