@@ -5,9 +5,10 @@
 #include "proc/ProcessPrinter.h"
 
 #ifdef _WIN32
-#include "proc/WindowsProcessProvider.cpp"
+#include <windows.h> // SetConsoleOutputCP(...)
+#include "proc/WindowsProcessProvider.h"
 #else
-#include "proc/LinuxProcessProvider.cpp"
+#include "proc/LinuxProcessProvider.h"
 #endif
 
 int main(int argc, char **argv)

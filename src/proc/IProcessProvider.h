@@ -7,6 +7,6 @@
 
 struct IProcessProvider
 {
-    virtual std::vector<std::unique_ptr<ProcessInfo>> GetProcesses() = 0;
+    virtual std::vector<std::unique_ptr<ProcessInfo>> GetProcesses(const bool readThreads = false) = 0;
     virtual ~IProcessProvider() = default;
 };
