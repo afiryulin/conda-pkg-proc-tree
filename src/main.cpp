@@ -22,12 +22,6 @@ int main(int argc, char **argv)
 
     Options opts = OptionsParser::Parse(argc, argv);
 
-    if (opts.showThreads)
-        std::cout << "Thread showing turned on" << std::endl;
-
-    if (opts.jsonOutput)
-        std::cout << "JSON output turned on" << std::endl;
-
     auto processes = provider.GetProcesses(opts.showThreads);
 
     ProcessTreeBuilder builder;
