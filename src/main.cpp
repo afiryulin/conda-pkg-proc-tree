@@ -14,6 +14,7 @@ int main(int argc, char **argv)
 {
 #ifdef _WIN32
     WindowsProcessProvider provider;
+    SetConsoleOutputCP(65001); // Set UTF-8 output encoding
 #else
     LinuxProcessProvider provider;
 #endif

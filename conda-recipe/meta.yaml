@@ -7,19 +7,23 @@ source:
 
 build:
   number: 0
+  # script: call bld.bat # [win]
+  script: call build.sh # [linux]
+    
 
 requirements:
   build:
     - cmake
-    - make
-    - {{ compiler('cxx') }}
+    - ninja
+    - {{ compiler('cxx') }} # [linux]
+    # - m2w64-gcc-toolchain # [win]
 
   host:
-    - libstdcxx-ng
+    - libstdcxx-ng # [linux]
 
   run:
-    - libstdcxx-ng
+    - libstdcxx-ng # [linux]
 
-  about:
-    summary: A C++ library that prints for process tree.
-    license: MIT
+about:
+  summary: A C++ library that prints for process tree.
+  license: MIT
