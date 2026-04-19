@@ -9,10 +9,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v4
 
       - name: Install dependencies
         run: |
@@ -25,7 +27,7 @@ jobs:
           miniforge-variant: Miniforge3
           auto-activate: true
           conda-remove-defaults: true
-          channels: conda-forge, nodefaults
+          channels: conda-forge
 
       - name: Install Build Tools
         shell: bash -el {0}
@@ -38,12 +40,13 @@ jobs:
             conda build conda-recipe --output-folder dist
 
       - name: Upload Package
-        uses: actions/upload-artifact@v7.0.1
+        uses: actions/upload-artifact@v4
         with:
           name: proc-tree-package
           path: |
             dist/**/*.conda
             dist/**/*.tar.bz2
           if-no-files-found: error
+          retention-days: 7
 
 
