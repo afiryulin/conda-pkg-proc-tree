@@ -8,7 +8,7 @@
 #define NOT_LAST_ITEM_PREFIX "│   "
 #define SPACING_PREFIX "    "
 
-class ProcessPrinter
+class ProcessPrinter final
 {
 public:
     static void Print(const std::vector<std::shared_ptr<ProcessInfo>> roots, bool showThreads);
