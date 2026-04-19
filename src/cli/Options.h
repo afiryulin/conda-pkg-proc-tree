@@ -4,6 +4,7 @@ struct Options
 {
     bool showThreads{false};
     bool jsonOutput{false};
+    bool showHelp{false};
 };
 
 struct OptionsParser
