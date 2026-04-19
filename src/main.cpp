@@ -28,7 +28,7 @@ int main(int argc, char **argv)
     if (opts.jsonOutput)
         std::cout << "JSON output turned on" << std::endl;
 
-    auto processes = provider.GetProcesses();
+    auto processes = provider.GetProcesses(opts.showThreads);
 
     ProcessTreeBuilder builder;
     auto root = builder.BuildTree(processes);
