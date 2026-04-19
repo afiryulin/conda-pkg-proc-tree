@@ -29,7 +29,6 @@ struct WindowsProcessProvider : IProcessProvider
         }
 
         CloseHandle(snap);
-        std::cout << result.size() << std::endl;
         return result;
     }
 };
