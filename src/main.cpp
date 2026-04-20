@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include <fmt/core.h>
 
 #include "cli/Options.h"
@@ -12,7 +10,7 @@
 #include "proc/WindowsProcessProvider.h"
 #else
 #include "proc/LinuxProcessProvider.h"
-#endif
+#endif //_WIN32
 
 int main(int argc, char **argv)
 {
@@ -21,7 +19,7 @@ int main(int argc, char **argv)
     SetConsoleOutputCP(65001); // Set UTF-8 output encoding
 #else
     LinuxProcessProvider provider;
-#endif
+#endif // _WIN32
 
     Options opts = OptionsParser::Parse(argc, argv);
 

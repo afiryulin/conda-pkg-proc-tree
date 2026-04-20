@@ -16,17 +16,6 @@ void to_json(json &data, const ProcessInfo &pi)
 
 void JsonExporter::Export(std::vector<std::shared_ptr<ProcessInfo>> roots, int depth)
 {
-    // for (const auto &root : roots)
-    // {
-    //     if (!root)
-    //         continue;
-
-    //     std::string indent(depth * 2, ' ');
-    //     std::cout << indent << "[PID: " << root->pid << "] " << root->name << std::endl;
-
-    //     Export(root->children, depth + 1);
-    // }
-
     json j = roots;
     std::cout << j.dump(4) << std::endl;
 }
