@@ -6,7 +6,6 @@
 
 #include "ProcessInfo.h"
 
-
 namespace nlohmann
 {
     template <typename T>
@@ -15,9 +14,11 @@ namespace nlohmann
         static void to_json(json &j, const std::shared_ptr<T> &val) noexcept
         {
             if (val)
-                j = *val;
+                adl_serializer<T>::to_json(j, *val);
             else
-                j = nullptr;
+            {
+                j.clear();
+            }
         }
     };
 }
