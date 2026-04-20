@@ -2,6 +2,11 @@
 
 mkdir -p build && cd $_
 
-cmake $CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=$PREFIX -DCMAKE_BUILD_TYPE=Release ..
-make -j$(nproc)
-make install
+cmake .. \
+    -G Ninja \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX="$PREFIX" \
+    -DCMAKE_PREFIX_PATH="$PREFIX"
+
+ninja
+ninja install
