@@ -8,7 +8,17 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      fast-fail: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            artifact_name: linux-64
+          - os: windows-latest
+            artifact_name: win-64
+
+
+    runs-on: ${{ matrix.os }}
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
@@ -16,7 +26,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install dependencies
+      - name: Install dependencies (Linux)
         run: |
           sudo apt update
           sudo apt install -y build-essential cmake
@@ -42,7 +52,7 @@ jobs:
       - name: Upload Package
         uses: actions/upload-artifact@v4
         with:
-          name: proc-tree-package
+          name: proc-tree-${{ matrix.artifact_name }}
           path: |
             dist/**/*.conda
             dist/**/*.tar.bz2
