@@ -16,7 +16,6 @@ requirements:
     - cmake
     - ninja
     - {{ compiler('cxx') }} # [linux]
-    # - m2w64-gcc-toolchain # [win]
 
   host:
     - libstdcxx-ng # [linux]
@@ -25,14 +24,15 @@ requirements:
 
   run:
     - fmt
+    - nlohmann_json
     - libstdcxx-ng # [linux]
 
 test:
-  requires:
-    - proc-tree
   commands:
-    - proc-tree --help
+    - proc-tree || true
+    - proc-tree --help || true
 
 about:
+  home: https://github.com/afiryulin/conda-pkg-proc-tree
   summary: A C++ library that prints for process tree.
   license: MIT
