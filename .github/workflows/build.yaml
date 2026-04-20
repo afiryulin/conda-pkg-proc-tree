@@ -43,7 +43,7 @@ jobs:
       - name: Install Build Tools
         shell: bash -el {0}
         run: |
-            mamba install -y conda-build anaconda-client
+            mamba install -y -n base conda-build anaconda-client
 
       - name: Build Conda Package
         shell: bash -el {0}
