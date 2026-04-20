@@ -1,9 +1,7 @@
-#include <iostream>
-
 #include <fmt/core.h>
-#include <iostream>
 
 #include "cli/Options.h"
+#include "proc/JsonExporter.h"
 #include "proc/ProcessTreeBuilder.h"
 #include "proc/ProcessPrinter.h"
 
@@ -12,7 +10,7 @@
 #include "proc/WindowsProcessProvider.h"
 #else
 #include "proc/LinuxProcessProvider.h"
-#endif
+#endif //_WIN32
 
 int main(int argc, char **argv)
 {
@@ -21,7 +19,7 @@ int main(int argc, char **argv)
     SetConsoleOutputCP(65001); // Set UTF-8 output encoding
 #else
     LinuxProcessProvider provider;
-#endif
+#endif // _WIN32
 
     Options opts = OptionsParser::Parse(argc, argv);
 
@@ -34,9 +32,13 @@ int main(int argc, char **argv)
     auto processes = provider.GetProcesses(opts.showThreads);
 
     ProcessTreeBuilder builder;
-    auto root = builder.BuildTree(processes);
-
-    ProcessPrinter::Print(root, opts.showThreads);
+    auto roots = builder.BuildTree(processes);
+    if (opts.jsonOutput)
+    {
+        JsonExporter::Export(roots);
+    }
+    else
+        ProcessPrinter::Print(roots, opts.showThreads);
 
     return 0;
 }

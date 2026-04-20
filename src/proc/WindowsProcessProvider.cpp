@@ -75,4 +75,4 @@ void WindowsProcessProvider::LoadThreads(std::unique_ptr<ProcessInfo> &proc)
     }
 }
 
-#endif
+#endif //_WIN32
