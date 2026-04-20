@@ -16,8 +16,8 @@ requirements:
   build:
     - cmake
     - ninja
-    - {{ compiler('cxx') }}
     - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
 
   host:
     - nlohmann_json
