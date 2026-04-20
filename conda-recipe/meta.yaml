@@ -1,38 +1,41 @@
+{% set name = "proc-tree" %}
+{% set version = "0.1.0" %}
+
 package:
-  name: proc-tree
-  version: 0.1.0
+  name: {{ name|lower }}
+  version: {{ version }}
 
 source:
-  path: ..
+  url: https://github.com/afiryulin/conda-pkg-proc-tree/archive/refs/tags/v{{ version }}.tar.gz
+  sha256: 562192f205a919110848fbfcc4a16db988a1dfc207b6e8644f0f236406b2e7d0
 
 build:
   number: 0
-  # script: call bld.bat # [win]
-  # script: call build.sh # [linux]
-
 
 requirements:
   build:
     - cmake
     - ninja
-    - {{ compiler('cxx') }} # [linux]
+    - {{ compiler('cxx') }}
+    - {{ compiler('c') }}
 
   host:
-    - libstdcxx-ng # [linux]
-    - fmt
     - nlohmann_json
+    - fmt
 
   run:
     - fmt
-    - nlohmann_json
-    - libstdcxx-ng # [linux]
 
 test:
   commands:
-    - proc-tree || true
-    - proc-tree --help || true
+    - proc-tree --help
 
 about:
   home: https://github.com/afiryulin/conda-pkg-proc-tree
-  summary: A C++ library that prints for process tree.
+  summary: Cross-platform CLI tool to display process tree
   license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - afiryulin

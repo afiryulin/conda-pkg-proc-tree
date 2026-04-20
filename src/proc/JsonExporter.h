@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <memory>
-#include <nlohmann/adl_serializer.hpp>
+#include <nlohmann/json.hpp>
 
 #include "ProcessInfo.h"
 
@@ -11,13 +11,14 @@ namespace nlohmann
     template <typename T>
     struct adl_serializer<std::shared_ptr<T>>
     {
+        template <typename BasicJsonType>
         static void to_json(json &j, const std::shared_ptr<T> &val) noexcept
         {
             if (val)
-                adl_serializer<T>::to_json(j, *val);
+                j = *val;
             else
             {
-                j.clear();
+                j = nullptr;
             }
         }
     };
@@ -25,5 +26,5 @@ namespace nlohmann
 
 struct JsonExporter final
 {
-    static void Export(std::vector<std::shared_ptr<ProcessInfo>> roots, int depth = 0);
+    static void Export(std::vector<std::shared_ptr<ProcessInfo>> roots);
 };

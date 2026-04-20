@@ -14,7 +14,7 @@ void to_json(json &data, const ProcessInfo &pi)
         {"children", pi.children}};
 }
 
-void JsonExporter::Export(std::vector<std::shared_ptr<ProcessInfo>> roots, int depth)
+void JsonExporter::Export(std::vector<std::shared_ptr<ProcessInfo>> roots)
 {
     json j = roots;
     std::cout << j.dump(4) << std::endl;
