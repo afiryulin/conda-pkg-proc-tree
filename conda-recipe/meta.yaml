@@ -12,13 +12,18 @@ source:
 
 build:
   number: 0
+  script:
+      bash conda-recipe/build.sh  # [linux]
+      call conda-recipe/build.bat  # [win]
+  entry_points:
+    - proc-tree=proc_tree.main:main
   skip: true  # [osx]
 
 requirements:
   build:
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
-    - {{ stdlib("c") }}
+    - ${{ compiler('c') }}
+    - ${{ compiler('cxx') }}
+    - ${{ stdlib("c") }}
     - cmake
     - ninja
     - m2-base  # [win]
@@ -36,6 +41,7 @@ test:
 
 about:
   home: https://github.com/afiryulin/conda-pkg-proc-tree
+  homepage: https://github.com/afiryulin/conda-pkg-proc-tree
   summary: Cross-platform CLI tool to display process tree
   license: MIT
   license_file: LICENSE
