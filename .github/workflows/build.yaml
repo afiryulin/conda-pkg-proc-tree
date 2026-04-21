@@ -33,7 +33,7 @@ jobs:
         if: matrix.os == 'windows-latest'
         shell: pwsh
         run: |
-          vcpkg install fmt nlohmann-json
+          choco install -y cmake fmt nlohmann-json
 
       - name: Configure CMake
         run: cmake -S . -B ${{github.workspace}}/build -G Ninja
