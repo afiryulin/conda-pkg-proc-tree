@@ -1,0 +1,9 @@
+name: conda_cache
+channels:
+  - conda-forge
+dependencies:
+  - nlohmann_json
+  - fmt
+  - conda-build
+  - anaconda-client
+  - boa
