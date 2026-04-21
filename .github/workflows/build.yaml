@@ -42,12 +42,6 @@ jobs:
           cmake -S . -B build -G Ninja
           ${{ runner.os == 'Windows' && '-DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake' || '' }}
 
-      - name: Configure CMake
-        shell: bash
-        run: |
-          run: cmake -S . -B build -G Ninja ${{ env.VCPKG_TOOLCHAIN }} -DCMAKE_BUILD_TYPE=Release
-
-
       - name: Build
         run: |
           cmake --build ${{github.workspace}}/build
