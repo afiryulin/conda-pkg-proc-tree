@@ -11,7 +11,6 @@ namespace nlohmann
     template <typename T>
     struct adl_serializer<std::shared_ptr<T>>
     {
-        template <typename BasicJsonType>
         static void to_json(json &j, const std::shared_ptr<T> &val) noexcept
         {
             if (val)
