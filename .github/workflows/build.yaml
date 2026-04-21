@@ -18,8 +18,6 @@ jobs:
             artifact_name: win-64
 
     runs-on: ${{ matrix.os }}
-    env:
-      VCPKG_TOOLCHAIN: ${{ matrix.os == 'windows-latest' && format('-DCMAKE_TOOLCHAIN_FILE={0}/scripts/buildsystems/vcpkg.cmake', env.VCPKG_INSTALLATION_ROOT) || '' }}
 
     steps:
       - name: Checkout
@@ -32,12 +30,17 @@ jobs:
           sudo apt install -y build-essential cmake libfmt-dev nlohmann-json3-dev
 
       - name: Install dependencies (Windows)
-        if: runner.os == 'Windows'
+        if: runner.os == 'windows-latest'
         run: vcpkg install fmt nlohmann-json
 
       - name: Setup MSVC (Windows)
-        if: runner.os == 'Windows'
+        if: runner.os == 'windows-latest'
         uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Configure CMake
+        run: >
+          cmake -S . -B build -G Ninja
+          ${{ runner.os == 'windows-latest' && '-DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake' || '' }}
 
       - name: Configure CMake
         shell: bash
