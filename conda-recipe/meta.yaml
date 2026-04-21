@@ -8,7 +8,7 @@ package:
 source:
   path: ..
   # url: https://github.com/afiryulin/conda-pkg-proc-tree/archive/refs/tags/v{{ version }}.tar.gz
-  # sha256: 562192f205a919110848fbfcc4a16db988a1dfc207b6e8644f0f236406b2e7d0
+  # sha256:
 
 build:
   number: 0

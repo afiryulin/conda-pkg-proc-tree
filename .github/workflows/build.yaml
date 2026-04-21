@@ -43,12 +43,12 @@ jobs:
       - name: Install Build Tools
         shell: bash -el {0}
         run: |
-            conda install -y conda-build anaconda-client -c conda-forge
+            conda install -y conda-build anaconda-client boa -c conda-forge
 
       - name: Build Conda Package
         shell: bash -el {0}
         run: |
-            conda-build conda-recipe --output-folder dist -c conda-forge --no-test
+            conda mambabuild conda-recipe --output-folder dist -c conda-forge --no-test
 
       - name: Upload Package
         uses: actions/upload-artifact@v4
