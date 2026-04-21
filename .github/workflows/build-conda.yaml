@@ -34,7 +34,7 @@ jobs:
           echo "$HOME/.pixi/bin" >> $GITHUB_PATH
 
       - name: Setup MSVC
-        if: runner.os == 'windows-latest'
+        if: matrix.os == 'windows-latest'
         uses: ilammy/msvc-dev-cmd@v1
 
       - name: Setup rattler-build (Windows)
