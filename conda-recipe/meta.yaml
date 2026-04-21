@@ -15,10 +15,10 @@ build:
 
 requirements:
   build:
-    - cmake
-    - ninja
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
+    - cmake
+    - ninja
     - m2-base  # [win]
 
   host:
