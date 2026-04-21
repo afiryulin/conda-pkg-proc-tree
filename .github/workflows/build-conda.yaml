@@ -26,6 +26,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Get Date
+        id: get-date
+        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+        shell: bash
+
+      - name: Cache Conda packages
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/conda_pkgs_dir
+          key: ${{ runner.os }}-conda-${{ steps.get-date.outputs.date }}-${{ hashFiles('environment.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-conda-${{ steps.get-date.outputs.date }}-
+            ${{ runner.os }}-conda-
+
       - name: Install dependencies (Linux)
         if: matrix.os == 'ubuntu-latest'
         run: |
@@ -35,13 +49,15 @@ jobs:
       - name: Setup Conda
         uses: conda-incubator/setup-miniconda@v3.3.0
         with:
+          activate-environment: my_env
+          environment-file: environment.yml
+          pkgs-dirs: ${{ github.workspace }}/conda_pkgs_dir
+          use-only-tar-bz2: true
           miniforge-variant: Miniforge3
           auto-activate: true
           conda-remove-defaults: true
           channels: conda-forge
           use-mamba: true
-          cache-environment: true
-          cache-environment-key: ${{ runner.os }}-conda-${{ hashFiles('conda-recipe/meta.yaml') }}
 
       - name: Install Build Tools
         shell: bash -el {0}
@@ -58,7 +74,7 @@ jobs:
         if: matrix.os == 'windows-latest'
         shell: bash -el {0}
         run: |
-            conda mambabuild conda-recipe --output-folder dist -c conda-forge --no-test
+            conda conda-build conda-recipe --output-folder dist -c conda-forge --no-test
 
 
       - name: Upload Package
