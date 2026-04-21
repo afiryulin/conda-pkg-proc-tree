@@ -5,6 +5,7 @@
 .idea/
 .cache/
 .venv/
+deploy/
 entities.json
 mempalace.yaml
 .codex
