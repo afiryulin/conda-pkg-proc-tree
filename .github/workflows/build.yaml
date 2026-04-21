@@ -14,8 +14,10 @@ jobs:
         include:
           - os: ubuntu-latest
             artifact_name: linux-64
+            shell: bash el {0}
           - os: windows-latest
             artifact_name: win-64
+            shell: pwsh
 
 
     runs-on: ${{ matrix.os }}
@@ -46,7 +48,7 @@ jobs:
             conda install -y conda-build anaconda-client boa -c conda-forge
 
       - name: Build Conda Package
-        shell: bash -el {0}
+        shell: ${{ matrix.shell }}
         run: |
             conda mambabuild conda-recipe --output-folder dist -c conda-forge --no-test
 
