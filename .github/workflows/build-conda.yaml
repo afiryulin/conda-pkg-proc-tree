@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-conda:
     strategy:
       fail-fast: false
       matrix:
