@@ -26,14 +26,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Rattler-build
-        uses: prefix-dev/setup-rattler-build@v0.2
-        with:
-          build-with-pixi: false
+      - name: Setup rattler-build
+        shell: bash
+        run: |
+          curl -fsSL https://prefix.dev | bash
+          echo "$HOME/.rattler-build/bin" >> $GITHUB_PATH
 
       - name: Build Conda Package
         run: |
-          rattler-build build --recipe conda-recipe/recipe.yaml
+          rattler-build build --recipe conda-recipe/recipe.yaml --output-dir dist
 
       - name: Upload Package
         uses: actions/upload-artifact@v4
