@@ -38,17 +38,24 @@ jobs:
           auto-activate: true
           conda-remove-defaults: true
           channels: conda-forge
-          init-shell: true
 
       - name: Install Build Tools
         shell: bash -el {0}
         run: |
             conda install -y conda-build anaconda-client boa -c conda-forge
 
-      - name: Build Conda Package
+      - name: Build Conda Package (Linux)
+        if: matrix.os == 'ubuntu-latest'
         shell: bash -el {0}
         run: |
             conda mambabuild conda-recipe --output-folder dist -c conda-forge --no-test
+
+      - name: Build Conda Package (Linux)
+        if: matrix.os == 'windows-latest'
+        shell: pwsh
+        run: |
+            conda mambabuild conda-recipe --output-folder dist -c conda-forge --no-test
+
 
       - name: Upload Package
         uses: actions/upload-artifact@v4

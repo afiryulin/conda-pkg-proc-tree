@@ -19,6 +19,7 @@ requirements:
     - ninja
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
+    - m2-base  # [win]
 
   host:
     - nlohmann_json
