@@ -6,6 +6,7 @@
 .cache/
 .venv/
 deploy/
+output/
 entities.json
 mempalace.yaml
 .codex

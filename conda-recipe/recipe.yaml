@@ -1,0 +1,41 @@
+context:
+  name: proc-tree
+  version: "0.1.2"
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  path: ..
+
+build:
+  number: 0
+  script:
+    - if: unix
+      then: bash conda-recipe/build.sh
+    - if: win
+      then: call conda-recipe/bld.bat
+
+requirements:
+  build:
+    - ${{ compiler('c') }}
+    - ${{ compiler('cxx') }}
+    - cmake
+    - ninja
+
+  host:
+    - nlohmann_json
+    - fmt
+
+  run:
+    - fmt
+
+tests:
+  - script:
+    - proc-tree --help
+
+about:
+  summary: Cross-platform CLI tool to display process tree
+  license: MIT
+  license_file: LICENSE

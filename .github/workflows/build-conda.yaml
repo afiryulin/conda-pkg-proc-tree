@@ -26,58 +26,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Get Date
-        id: get-date
-        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
-        shell: bash
-
-      - name: Cache Conda packages
-        uses: actions/cache@v4
+      - name: Setup Rattler-build
+        uses: prefix-dev/setup-rattler-build@v0.2
         with:
-          path: ${{ github.workspace }}/conda_cache_dir
-          key: ${{ runner.os }}-conda-${{ steps.get-date.outputs.date }}-${{ hashFiles('conda-recipe/environment.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-conda-${{ steps.get-date.outputs.date }}-
-
-      - name: Install dependencies (Linux)
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-          sudo apt update
-          sudo apt install -y build-essential cmake
-
-      - name: Setup Conda
-        uses: conda-incubator/setup-miniconda@v3.3.0
-        with:
-          activate-environment: conda_cache
-          environment-file: conda-recipe/environment.yaml
-          pkgs-dirs: ${{ github.workspace }}/conda_cache_dir
-          use-only-tar-bz2: true
-          miniforge-variant: Miniforge3
-          auto-activate: true
-          conda-remove-defaults: false
-          channels: conda-forge, defaults
-          use-mamba: true
-
-      - name: Install Build Tools
-        shell: bash -el {0}
-        run: |
-            conda install -y conda-build anaconda-client boa -c conda-forge
-
-      - name: Configure Conda-Build
-        shell: bash -el {0}
-        run: |
-          conda config --append channels conda-forge
-          conda config --set channel_priority strict
+          build-with-pixi: false
 
       - name: Build Conda Package
-        shell: bash -el {0}
         run: |
-            # conda index ${{ github.workspace }}/conda_cache_dir
-            conda config --remove channels defaults || true
-            conda config --add channels conda-forge
-            conda config --set channel_priority strict
-            conda mambabuild conda-recipe --output-folder dist -c conda-forge --no-test
-
+          rattler-build build --recipe conda-recipe/recipe.yaml
 
       - name: Upload Package
         uses: actions/upload-artifact@v4
