@@ -27,7 +27,7 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt update
-          sudo apt install -y build-essential cmake libfmt-dev
+          sudo apt install -y build-essential cmake libfmt-dev nlohmann-json3-dev
 
       - name: Configure CMake
         run: cmake -S . -B ${{github.workspace}}/build -G Ninja
