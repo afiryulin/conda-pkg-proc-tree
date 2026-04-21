@@ -72,7 +72,6 @@ jobs:
       - name: Build Conda Package
         shell: bash -el {0}
         run: |
-            conda index ${{ github.workspace }}/conda_cache_dir
             conda config --set channel_priority strict
             conda mambabuild conda-recipe --output-folder dist -c conda-forge --no-test
 
