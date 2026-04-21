@@ -36,11 +36,17 @@ jobs:
           vcpkg install fmt nlohmann-json
 
       - name: Setup MSVC
-        if: runner.os == 'Windows'
+        if: runner.os == 'windows-latest'
         uses: ilammy/msvc-dev-cmd@v1
 
       - name: Configure CMake
-        run: cmake -S . -B ${{github.workspace}}/build
+        run: |
+          if [ "${{ runner.os }}" == "Windows" ]; then
+            cmake -S . -B build -G Ninja \
+              -DCMAKE_TOOLCHAIN_FILE="$VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
+          else
+            cmake -S . -B build -G Ninja
+          fi
 
       - name: Build
         run: |
