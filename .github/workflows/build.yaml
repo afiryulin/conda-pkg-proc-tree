@@ -35,8 +35,12 @@ jobs:
         run: |
           vcpkg install fmt nlohmann-json
 
+      - name: Setup MSVC
+        if: runner.os == 'Windows'
+        uses: ilammy/msvc-dev-cmd@v1
+
       - name: Configure CMake
-        run: cmake -S . -B ${{github.workspace}}/build -G Ninja
+        run: cmake -S . -B ${{github.workspace}}/build
 
       - name: Build
         run: |
