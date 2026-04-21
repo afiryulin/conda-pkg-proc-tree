@@ -63,6 +63,12 @@ jobs:
         run: |
             conda install -y conda-build anaconda-client boa -c conda-forge
 
+      - name: Configure Conda-Build
+        shell: bash -el {0}
+        run: |
+          conda config --append channels conda-forge
+          conda config --set channel_priority strict
+
       - name: Build Conda Package
         shell: bash -el {0}
         run: |
