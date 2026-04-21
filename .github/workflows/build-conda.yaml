@@ -34,11 +34,10 @@ jobs:
       - name: Cache Conda packages
         uses: actions/cache@v4
         with:
-          path: ${{ github.workspace }}/conda_pkgs_dir
-          key: ${{ runner.os }}-conda-${{ steps.get-date.outputs.date }}-${{ hashFiles('environment.yml') }}
+          path: ${{ github.workspace }}/conda_cache_dir
+          key: ${{ runner.os }}-conda-${{ steps.get-date.outputs.date }}-${{ hashFiles('environment.yaml') }}
           restore-keys: |
             ${{ runner.os }}-conda-${{ steps.get-date.outputs.date }}-
-            ${{ runner.os }}-conda-
 
       - name: Install dependencies (Linux)
         if: matrix.os == 'ubuntu-latest'
@@ -49,9 +48,9 @@ jobs:
       - name: Setup Conda
         uses: conda-incubator/setup-miniconda@v3.3.0
         with:
-          activate-environment: my_env
-          environment-file: environment.yml
-          pkgs-dirs: ${{ github.workspace }}/conda_pkgs_dir
+          activate-environment: conda_cache
+          environment-file: environment.yaml
+          pkgs-dirs: ${{ github.workspace }}/conda_cache_dir
           use-only-tar-bz2: true
           miniforge-variant: Miniforge3
           auto-activate: true
