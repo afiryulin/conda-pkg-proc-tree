@@ -54,8 +54,8 @@ jobs:
           use-only-tar-bz2: true
           miniforge-variant: Miniforge3
           auto-activate: true
-          conda-remove-defaults: true
-          channels: conda-forge
+          conda-remove-defaults: false
+          channels: conda-forge, defaults
           use-mamba: true
 
       - name: Install Build Tools
