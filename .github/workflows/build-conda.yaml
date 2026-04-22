@@ -47,7 +47,7 @@ jobs:
 
       - name: Build Conda Package
         run: |
-          pixi exec rattler-build build --recipe conda-recipe/meta.yaml --output-dir dist
+          pixi exec rattler-build build --recipe conda-recipe/recipe.yaml --output-dir dist
 
       - name: Upload Package
         uses: actions/upload-artifact@v4
