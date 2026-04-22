@@ -24,7 +24,7 @@ if(WIN32)
 elseif(UNIX)
     list(APPEND SOURCES src/proc/LinuxProcessProvider.cpp)
 elseif(APPLE)
-    list(APPEND SOURCES src/proc/MaxProcessProvider.cpp)
+    list(APPEND SOURCES src/proc/MacProcessProvider.cpp)
 endif()
 
 add_executable(${PROJECT_NAME} ${SOURCES})

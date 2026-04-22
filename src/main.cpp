@@ -16,13 +16,16 @@
 
 int main(int argc, char **argv)
 {
+
+    std::unique_ptr<IProcessProvider> provider;
+
 #ifdef _WIN32
-    WindowsProcessProvider provider;
+    provider = std::make_unique<WindowsProcessProvider>();
     SetConsoleOutputCP(65001); // Set UTF-8 output encoding
 #elif defined(__linux__)
-    LinuxProcessProvider provider;
+    provider = std::make_unique<LinuxProcessProvider>();
 #elif defined(__APPLE__)
-    MacProcessProvider provider;
+    provider = std::make_unique<MacProcessProvider>();
 #endif // _WIN32
 
     Options opts = OptionsParser::Parse(argc, argv);
@@ -33,7 +36,7 @@ int main(int argc, char **argv)
         return 0;
     }
 
-    auto processes = provider.GetProcesses(opts.showThreads);
+    auto processes = provider->GetProcesses(opts.showThreads);
 
     ProcessTreeBuilder builder;
     auto roots = builder.BuildTree(processes);
