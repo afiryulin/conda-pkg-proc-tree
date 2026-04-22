@@ -56,4 +56,4 @@ jobs:
 
       - name: Run Console App
         run:
-          ./build/proc-tree --help
+          ./build/proc-tree

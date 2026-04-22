@@ -8,8 +8,10 @@
 #ifdef _WIN32
 #include <windows.h> // SetConsoleOutputCP(...)
 #include "proc/WindowsProcessProvider.h"
-#else
+#elif defined(__linux__)
 #include "proc/LinuxProcessProvider.h"
+#elif
+#include "proc/MacProcessProvider.h"
 #endif //_WIN32
 
 int main(int argc, char **argv)
