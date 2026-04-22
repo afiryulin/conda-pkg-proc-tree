@@ -1,4 +1,8 @@
 #include <sys/sysctl.h>
+#include <mach/mach.h>
+#include <mach/task.h>
+#include <mach/thread_act.h>
+#include <mach/vm_map.h>
 #include <memory>
 #include <vector>
 
@@ -44,11 +48,14 @@ MacProcessProvider::GetProcesses(const bool readThreads)
 
 void MacProcessProvider::LoadThreads(std::unique_ptr<ProcessInfo> &proc)
 {
+    if (!proc)
+        return;
+
     task_t task;
-    kern_return_t kr = task_for_pid(mach_task_self(), pid, &task);
+    kern_return_t kr = task_for_pid(mach_task_self(), proc->pid, &task);
     if (kr != KERN_SUCCESS)
     {
-        return threadsResult; // нет прав — просто пусто
+        return;
     }
 
     thread_act_array_t threadList;
@@ -57,13 +64,13 @@ void MacProcessProvider::LoadThreads(std::unique_ptr<ProcessInfo> &proc)
     kr = task_threads(task, &threadList, &threadCount);
     if (kr != KERN_SUCCESS)
     {
-        return threadsResult;
+        return;
     }
 
     for (mach_msg_type_number_t i = 0; i < threadCount; ++i)
     {
         thread_t thread = threadList[i];
-        proc->threads.push_back(static_cast<int>(thread));
+        proc->threads.push_back(static_cast<uint32_t>(thread));
     }
 
     vm_deallocate(mach_task_self(),
