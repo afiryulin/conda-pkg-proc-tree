@@ -21,10 +21,10 @@ set(SOURCES
 
 if(WIN32)
     list(APPEND SOURCES src/proc/WindowsProcessProvider.cpp)
-elseif(UNIX)
-    list(APPEND SOURCES src/proc/LinuxProcessProvider.cpp)
 elseif(APPLE)
     list(APPEND SOURCES src/proc/MacProcessProvider.cpp)
+elseif(UNIX)
+    list(APPEND SOURCES src/proc/LinuxProcessProvider.cpp)
 endif()
 
 add_executable(${PROJECT_NAME} ${SOURCES})
