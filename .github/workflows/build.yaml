@@ -53,3 +53,7 @@ jobs:
       - name: Build
         run: |
           cmake --build ${{github.workspace}}/build
+
+      - name: Run Console App
+        run:
+          ./build/proc-tree --help
