@@ -19,6 +19,9 @@ jobs:
           - os: macos-latest
             artifact_name: osx-64
 
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -56,4 +59,4 @@ jobs:
 
       - name: Run proc-tree application
         run:
-          ./build/proc-tree
+          ./build/proc-tree --threads
