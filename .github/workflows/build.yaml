@@ -54,6 +54,6 @@ jobs:
         run: |
           cmake --build ${{github.workspace}}/build
 
-      - name: Run Console App
+      - name: Run proc-tree application
         run:
           ./build/proc-tree

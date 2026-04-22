@@ -10,7 +10,7 @@
 #include "proc/WindowsProcessProvider.h"
 #elif defined(__linux__)
 #include "proc/LinuxProcessProvider.h"
-#elif
+#elif defined(__APPLE__)
 #include "proc/MacProcessProvider.h"
 #endif //_WIN32
 
@@ -22,7 +22,7 @@ int main(int argc, char **argv)
 #elif defined(__linux__)
     LinuxProcessProvider provider;
 #elif defined(__APPLE__)
-    MaxProcessProvider provider;
+    MacProcessProvider provider;
 #endif // _WIN32
 
     Options opts = OptionsParser::Parse(argc, argv);
