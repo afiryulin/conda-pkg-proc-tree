@@ -16,6 +16,11 @@ jobs:
             artifact_name: linux-64
           - os: windows-latest
             artifact_name: win-64
+          - os: macos-latest
+            artifact_name: osx-64
+
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     runs-on: ${{ matrix.os }}
 
@@ -28,6 +33,12 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y build-essential cmake libfmt-dev nlohmann-json3-dev
+
+      - name: Install dependencies (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          brew update
+          brew install fmt nlohmann-json
 
       - name: Install dependencies (Windows)
         if: runner.os == 'Windows'
@@ -45,3 +56,7 @@ jobs:
       - name: Build
         run: |
           cmake --build ${{github.workspace}}/build
+
+      - name: Run proc-tree application
+        run:
+          ./build/proc-tree --threads
