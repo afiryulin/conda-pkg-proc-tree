@@ -17,6 +17,8 @@ jobs:
             artifact_name: linux-64
           - os: windows-latest
             artifact_name: win-64
+          - os: macos-latest
+            artifact_name: osx-64
 
     runs-on: ${{ matrix.os }}
     env:
