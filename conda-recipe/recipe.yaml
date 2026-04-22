@@ -37,7 +37,6 @@ tests:
     - proc-tree --help
 
 about:
-  home: https://github.com/afiryulin/conda-pkg-proc-tree
   homepage: https://github.com/afiryulin/conda-pkg-proc-tree
   summary: Cross-platform CLI tool to display process tree
   license: MIT
