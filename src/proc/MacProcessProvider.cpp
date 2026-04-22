@@ -25,13 +25,13 @@ MacProcessProvider::GetProcesses(const bool readThreads)
 
     for (int i = 0; i < count; ++i)
     {
-        auto proc = std::make_shared<ProcessInfo>();
+        auto proc = std::make_unique<ProcessInfo>();
 
         proc->pid = procList[i].kp_proc.p_pid;
         proc->parentPid = procList[i].kp_eproc.e_ppid;
         proc->name = procList[i].kp_proc.p_comm;
 
-        result.push_back(proc);
+        result.push_back(std::move(proc));
     }
 
     return result;
