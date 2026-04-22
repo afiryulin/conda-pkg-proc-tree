@@ -6,11 +6,17 @@ package:
   version: {{ version }}
 
 source:
-  url: https://github.com/afiryulin/conda-pkg-proc-tree/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 3f0ee5871acf38c4ccef2f99f2b8902b5dbbefb2fa213429c5d8f47f9190114d
+  path: ..
+  # url: https://github.com/afiryulin/conda-pkg-proc-tree/archive/refs/tags/v{{ version }}.tar.gz
+  # sha256: 3f0ee5871acf38c4ccef2f99f2b8902b5dbbefb2fa213429c5d8f47f9190114d
 
 build:
   number: 0
+  # script:
+  #     bash conda-recipe/build.sh  # [linux]
+  #     call conda-recipe/build.bat  # [win]
+  # entry_points:
+  #   - proc-tree=proc_tree.main:main
   skip: true  # [osx]
 
 requirements:

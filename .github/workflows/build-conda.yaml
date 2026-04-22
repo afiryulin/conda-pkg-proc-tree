@@ -1,10 +1,10 @@
 name: Build Conda Package
 
 on:
-  # push:
-  #   branches: [master]
-  # pull_request:
-  #   branches: [master]
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
   workflow_dispatch:
 
 jobs:
@@ -26,40 +26,28 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install dependencies (Linux)
+      - name: Setup rattler-build (Linux)
         if: matrix.os == 'ubuntu-latest'
+        shell: bash
         run: |
-          sudo apt update
-          sudo apt install -y build-essential cmake
+          curl -fsSL https://pixi.sh/install.sh | sh
+          echo "$HOME/.pixi/bin" >> $GITHUB_PATH
 
-      - name: Setup Conda
-        uses: conda-incubator/setup-miniconda@v3.3.0
-        with:
-          miniforge-variant: Miniforge3
-          auto-activate: true
-          conda-remove-defaults: true
-          channels: conda-forge
-          use-mamba: true
-          cache-environment: true
-          cache-environment-key: ${{ runner.os }}-conda-${{ hashFiles('conda-recipe/meta.yaml') }}
-
-      - name: Install Build Tools
-        shell: bash -el {0}
-        run: |
-            conda install -y conda-build anaconda-client boa -c conda-forge
-
-      - name: Build Conda Package (Linux)
-        if: matrix.os == 'ubuntu-latest'
-        shell: bash -el {0}
-        run: |
-            conda mambabuild conda-recipe --output-folder dist -c conda-forge --no-test
-
-      - name: Build Conda Package (Windows)
+      - name: Setup MSVC
         if: matrix.os == 'windows-latest'
-        shell: pwsh
-        run: |
-            conda mambabuild conda-recipe --output-folder dist -c conda-forge --no-test
+        uses: ilammy/msvc-dev-cmd@v1
 
+      - name: Setup rattler-build (Windows)
+        if: matrix.os == 'windows-latest'
+        shell: powershell
+        run: |
+          Invoke-WebRequest -Uri https://pixi.sh/install.ps1 -OutFile install.ps1
+          .\install.ps1
+          echo "$env:USERPROFILE\.pixi\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
+      - name: Build Conda Package
+        run: |
+          pixi exec rattler-build build --recipe conda-recipe/recipe.yaml --output-dir dist
 
       - name: Upload Package
         uses: actions/upload-artifact@v4
