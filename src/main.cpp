@@ -22,7 +22,7 @@ int main(int argc, char **argv)
 #elif defined(__linux__)
     LinuxProcessProvider provider;
 #elif defined(__APPLE__)
-    "proc/OsxProcessProvider.h"
+    MaxProcessProvider provider;
 #endif // _WIN32
 
     Options opts = OptionsParser::Parse(argc, argv);
